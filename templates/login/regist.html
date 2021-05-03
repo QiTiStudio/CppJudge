@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>注册</title>
+    <meta charset="utf-8">
+    <script src="/static/js/jquery3.3.1.js"></script>
+    <script>
+            $(function(){
+                $("#btnRegist").click(function(){
+                    username = $("#username").val()
+                    password = $("#password").val()
+                    repassword = $("#repassword").val()
+                    $.ajax({
+                        type: "post",
+                        dataType: 'json',
+                        data: {'username': username, 'password': password, 'repassword': repassword,},
+                        url: "/login/regist_check",
+                        success: function(data){
+                            if(data.res == true){
+                                $("#reginfo").show().html("注册成功！即将跳转...")
+                                location.href = "/login"
+                            }
+                            else{
+                                $("#reginfo").show().html("注册失败，问题："+data.info)
+                            }
+                        },
+                        error: function(data){
+                            alert("ajax_error")
+                        },
+                    })
+                })
+            })
+        </script>
+    <style>
+        #reginfo {
+            display: none;
+            color: red;
+        }
+    </style>
+    <style>
+        body {
+            background: url(./zhuce.jpg) no-repeat center 0px fixed;
+            background-size: cover;
+            float: left;
+        }
+        input {
+            border: 1px solid #ccc;
+            padding: 7px 0px;
+            border-radius: 3px;
+            padding-left: 5px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+        }
+
+        input:focus {
+            border-color: #66afe9;
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
+        }
+
+        #Logo {
+            font-family: "微软雅黑", sans-serif;
+            font-size: 50px;
+            font-weight: bolder;
+            text-align: center;
+            color: rgb(53, 54, 70);
+            margin: 50px 570px;
+            float: left;
+        }
+
+        .dise {
+            position: relative;
+            top: 150px;
+            background-color: #999595;
+            border-radius: 3px;
+            width: 400px;
+            height: 300px;
+            filter: opacity(0.5);
+            margin: 0 auto;
+        }
+        #username {
+            position: absolute;
+            left: 550px;
+            top: 230px;
+            padding: 2px;
+            width: 170px;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        #password {
+            position: absolute;
+            left: 550px;
+            top: 280px;
+            padding: 2px;
+            width: 170px;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        #repassword {
+            position: absolute;
+            left: 550px;
+            top: 330px;
+            padding: 2px;
+            width: 170px;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        #btnRegist {
+            position: absolute;
+            left: 620px;
+            top: 380px;
+            padding: 2px;
+            width: 40px;
+            color: black;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="Logo">Logo</div>
+    <div class="dise"></div>
+    <input type="text" id="username" placeholder="注册用户名"><br>
+    <input type="password" id="password" placeholder="注册密码"><br>
+    <input type="password" id="repassword" placeholder="再次输入密码"><br>
+    <br>
+    <input type="button" value="注册" id="btnRegist">
+    <div id="reginfo"></div>
+</body>
+
+</html>

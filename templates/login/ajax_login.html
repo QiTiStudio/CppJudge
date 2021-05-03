@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>登陆</title>
+    <script src="/static/js/jquery3.3.1.js"></script>
+    <script>
+        $(function () {
+            $("#btnRegist").click(function () { location.href = './regist' })
+            //绑定按钮
+            $('#btnLogin').click(function () {
+                //获取标签中的数据
+                username = $('#username').val()
+                passsword = $('#password').val()
+                verify_code = $('#verify_code').val()
+                //发送ajax请求
+                $.ajax({
+                    url: '/login/login_check',
+                    type: 'post',
+                    data: { 'name': username, 'psw': passsword, 'vc': verify_code},
+                    dataType: 'json',
+                    success: function (data) {
+                        result = ""
+                        //html的true和python的True不同
+                        if (data.res == true) {
+                            result = "登陆成功， 即将跳转..."
+                            location.href = '/index'
+                        }
+                        else {
+
+                            result = "登陆失败"
+                        }
+                        $('#login_message').show().html(result)
+                    },
+                    error: function (data) {
+                        alert('ajax_error!')
+                    },
+                })
+            })
+        })
+    </script>
+    <style>
+        #login_message {
+            display: none;
+            color: red;
+        }
+    </style>
+    <style>
+        body {
+            background: url(/static/img/denglu.jpg) no-repeat center 0px fixed;
+            background-size: cover;
+            float: left;
+        }
+
+        input {
+            border: 1px solid #ccc;
+            padding: 7px 0px;
+            border-radius: 3px;
+            padding-left: 5px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+        }
+
+        input:focus {
+            border-color: #66afe9;
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
+        }
+
+        #Logo {
+            font-family: "微软雅黑", sans-serif;
+            font-size: 50px;
+            font-weight: bolder;
+            text-align: center;
+            color: rgb(94, 170, 147);
+            margin: 55px 570px;
+            float: left;
+        }
+
+        .dise {
+            position: relative;
+            top: 155px;
+            background-color: #1b2525;
+            border-radius: 3px;
+            width: 350px;
+            height: 250px;
+            filter: opacity(0.5);
+            margin: 0 auto;
+        }
+
+        #username {
+            position: absolute;
+            left: 550px;
+            top: 230px;
+            padding: 2px;
+            width: 170px;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        #password {
+            position: absolute;
+            left: 550px;
+            top: 280px;
+            padding: 2px;
+            width: 170px;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        #verify_code {
+            position: absolute;
+            left: 550px;
+            top: 330px;
+            padding: 2px;
+            width: 170px;
+            color: black;
+            margin-bottom: 10px;
+        }
+        #verify_code_img {
+            position: absolute;
+            left: 548px;
+            top: 300px;
+            padding: 2px;
+            width: 110px;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        #btnLogin {
+            position: absolute;
+            left: 580px;
+            top: 370px;
+            padding: 2px;
+            width: 40px;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        #btnRegist {
+            position: absolute;
+            left: 660px;
+            top: 370px;
+            padding: 2px;
+            width: 40px;
+            color: black;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="Logo">Logo</div>
+    <div class="dise"></div>
+    <input type="text" id="username" placeholder="请输入用户名"><br>
+    <input type="password" id="password" placeholder="请输入密码"><br>
+    <input type="text" id="verify_code" placeholder="请输入验证码"><br>
+    <img src='/login/verify_code' id = "verify_code_img">
+    <br>
+    <input type="button" id="btnLogin" value="登陆">
+    <input type="button" id="btnRegist" value="注册">
+    <!--用于显示登陆后的提示信息-->
+    <div id="login_message"></div>
+</body>
+
+</html>
